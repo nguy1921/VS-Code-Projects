@@ -129,11 +129,7 @@ class TowerOfHanoi:
 
     def restart(self):
 
-        self.towers = {
-            'A': [],
-            'B': [],
-            'C': []
-        }
+        self.towers = {'A': [], 'B': [], 'C': []}
 
         self.towers[self.start] = list(
             range(self.num_disks, 0, -1)
@@ -161,14 +157,7 @@ class TowerOfHanoi:
             return
 
         # Move n-1 disks to auxiliary tower
-        self.solve(
-            n - 1,
-            source,
-            destination,
-            auxiliary,
-            step_by_step,
-            delay
-        )
+        self.solve( n - 1, source, destination, auxiliary, step_by_step, delay)
 
         # Move largest remaining disk
         self.move_disk(source, destination)
@@ -184,14 +173,7 @@ class TowerOfHanoi:
             time.sleep(delay)
 
         # Move n-1 disks onto destination
-        self.solve(
-            n - 1,
-            auxiliary,
-            source,
-            destination,
-            step_by_step,
-            delay
-        )
+        self.solve(n - 1, auxiliary, source, destination, step_by_step, delay)
 
 
 
@@ -270,24 +252,24 @@ def automatic_mode():
     choice = input("\nChoose an option: ")
 
     if choice == '1':
+        while True:
+            try:
+                delay = float(input("\nPlease choose a delay time between moves (in seconds, e.g., 0.5): "))
 
-        game.solve(
-            disks,
-            start,
-            auxiliary,
-            destination,
-            delay=0.5
-        )
+                if delay <= 0:
+                    print("Please enter a positive number.")
+                    continue
+
+                break
+
+            except ValueError:
+                print("Please enter a valid number (e.g., 0.5).")
+
+        game.solve(disks, start, auxiliary, destination, delay=delay)
 
     elif choice == '2':
 
-        game.solve(
-            disks,
-            start,
-            auxiliary,
-            destination,
-            step_by_step=True
-        )
+        game.solve(disks, start, auxiliary, destination, step_by_step=True)
 
     else:
         print("Invalid selection!")
@@ -412,9 +394,8 @@ def main_menu():
 
 
 def main():
-
+    # display main menu screen
     main_menu()
-
 
 if __name__ == "__main__":
     main()
